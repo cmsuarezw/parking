@@ -1,0 +1,7 @@
+spring:
+    main:
+        allow-circular-references: true
+    application:
+        name: vehiculo-microservice
+    config:
+        import: "optional:configserver:http://localhost:8888"
