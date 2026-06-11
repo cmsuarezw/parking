@@ -6,15 +6,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record HistoricoVehiculoRequest(
-    @NotNull(message="El ID de matricula es obligatorio")
-    @NotBlank(message="El ID de matricula tiene que estar informado")
-    Number id_Matricula,
     @NotNull(message = "Crud es obligatorio")
     @NotBlank(message = "Crud no puede estar en blanco. Debe ser CREATE, UPDATE o DELETE")
     String crud,
+    @NotNull(message="El ID de matricula es obligatorio")
+    @NotBlank(message="El ID de matricula tiene que estar informado")
+    Number idMatricula,
     @NotNull(message="El ID de cliente es obligatorio")
     @NotBlank(message="El ID de cliente tiene que estar informado")
-    String id_Cliente,
+    String idCliente,
     @NotNull(message="La matricula es obligatorio")
     @NotBlank(message="Lamtricula tiene que estar informadd")
     String matricula,
@@ -26,9 +26,9 @@ public record HistoricoVehiculoRequest(
     String modelo,
     @NotNull(message="La fecha de creación del vehículo es obligatoria")
     @NotBlank(message="La fecha de creación del vehículo tiene que estar informada")
-    LocalDateTime fec_Create,
-    LocalDateTime fec_Update,
-    LocalDateTime fec_Baja
+    LocalDateTime fecCreate,
+    LocalDateTime fecUpdate,
+    LocalDateTime fecBaja
 ) {
 
 }

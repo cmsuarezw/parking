@@ -8,13 +8,13 @@ public class HistoricoVehiculoMapper {
     public HistoricoVehiculoEntity toHistoricoVehiculoEntity(HistoricoVehiculoRequest request) {
         return HistoricoVehiculoEntity.builder()
                 .crud(request.crud())
-                .id_Cliente(request.id_Cliente())
                 .matricula(request.matricula())
+                .idCliente(request.idCliente())
                 .marca(request.marca())
                 .modelo(request.modelo())
-                .fec_Create(request.fec_Create())
-                .fec_Update(request.fec_Update())
-                .fec_Baja(request.fec_Baja())
+                .fecCreate(request.fecCreate())
+                .fecUpdate(request.fecUpdate())
+                .fecBaja(request.fecBaja())
                 .build();
     }
 /*

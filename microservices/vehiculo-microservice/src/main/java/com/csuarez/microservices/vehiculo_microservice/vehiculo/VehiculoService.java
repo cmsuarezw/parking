@@ -1,16 +1,11 @@
 package com.csuarez.microservices.vehiculo_microservice.vehiculo;
 
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.csuarez.microservices.vehiculo_microservice.Cliente.ClienteInterface;
 import com.csuarez.microservices.vehiculo_microservice.Cliente.ClienteResponse;
@@ -27,10 +22,6 @@ public class VehiculoService {
     private final VehiculoRepository repository;
     private final VehiculoMapper mapper = new VehiculoMapper();
     private final ClienteInterface clienteInterface;
-    @Autowired
-    private DiscoveryClient discoveryClient;
-    private URI uri;
-    private RestTemplate restTemplate;
 
     LocalDateTime localDatetime = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -91,8 +82,6 @@ public class VehiculoService {
    
     public String createVehiculo(VehiculoRequest request) {
 
-        String serviceName = "CLIENTE-MICROSERVICE";
-
         try {
             if (request == null) {
                 throw new VehiculoException("No se han recibido datos para la creación de vehiculo");
@@ -105,19 +94,7 @@ public class VehiculoService {
                         .orElseThrow(() -> new VehiculoException("no existe el cliente con Id " + request.idCliente()));
                         //.orElse(null);
             
-/*                             
 
-            List<ServiceInstance> lista = discoveryClient.getInstances(serviceName);
-            URI clienteUri = (lista != null && lista.size() > 0) ? lista.get(0).getUri() : null;
-log.warn("createVehiculo - clienteUri: %s".formatted(clienteUri));            
-            restTemplate = new RestTemplate();
-            var uri2 = "http://localhost:8091";
-            var existe = restTemplate.getForObject(uri2 + "/api/v1/clientes/getClienteById/" + request.idCliente(), String.class);
-        
-            if (existe == null){
-                throw new VehiculoException("No existe el cliente %s".formatted(request.idCliente()));
-            }
-*/
             VehiculoEntity vehiculoEntity = mapper.toVehiculo(request);
 
             //Por quitar la advertencia a falta de revision

@@ -8,16 +8,16 @@ import lombok.Builder;
 public record HistoricoClienteResponse(
     Number id,
     String crud,
-    String id_Cliente,
+    String idCliente,
     String dni,
     String nombre,
     String apellidos,
     String email,
     String telefono,
     String ciudad,
-    LocalDateTime fec_Create,
-    LocalDateTime fec_Update,
-    LocalDateTime fec_Baja
+    LocalDateTime fecCreate,
+    LocalDateTime fecUpdate,
+    LocalDateTime fecBaja
 ) {
 
 }

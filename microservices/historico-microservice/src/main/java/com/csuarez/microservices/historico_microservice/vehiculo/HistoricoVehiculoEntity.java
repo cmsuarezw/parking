@@ -40,11 +40,11 @@ public class HistoricoVehiculoEntity {
     @Column(name = "crud", nullable = false, columnDefinition = "VARCHAR2(10 CHAR)")
     private String crud;
 
-    @Column(name = "id_matricula", nullable = false, columnDefinition = "NUMBER")
-    private Number id_Matricula;
+    @Column(name = "idMatricula", nullable = false, columnDefinition = "NUMBER")
+    private Number idMatricula;
     
-    @Column(name = "id_Cliente", nullable = false, columnDefinition = "VARCHAR2(100 CHAR)")
-    private String id_Cliente;
+    @Column(name = "idCliente", nullable = false, columnDefinition = "VARCHAR2(100 CHAR)")
+    private String idCliente;
 
     @Column(name = "matricula", nullable = false, columnDefinition = "VARCHAR2(10 CHAR)")
     private String matricula;
@@ -55,17 +55,17 @@ public class HistoricoVehiculoEntity {
     @Column(name = "modelo", nullable = true, columnDefinition = "VARCHAR2(20 CHAR)")
     private String modelo;
 
-    @Column(name = "fec_Create", nullable = false, columnDefinition = "TIMESTAMP")
+    @Column(name = "fecCreate", nullable = false, columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime fec_Create;
+    private LocalDateTime fecCreate;
 
-    @Column(name = "fec_Update", nullable = true, columnDefinition = "TIMESTAMP")
+    @Column(name = "fecUpdate", nullable = true, columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime fec_Update;
+    private LocalDateTime fecUpdate;
 
-    @Column(name = "fec_Baja", nullable = true, columnDefinition = "TIMESTAMP")
+    @Column(name = "fecBaja", nullable = true, columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-    private LocalDateTime fec_Baja;
+    private LocalDateTime fecBaja;
 
     @Column(name = "DatCre", nullable = false, columnDefinition = "DATE")
     @DateTimeFormat(pattern = "DD-MM-YYYY")

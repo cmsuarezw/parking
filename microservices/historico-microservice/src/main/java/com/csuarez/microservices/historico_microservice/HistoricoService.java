@@ -15,10 +15,6 @@ import com.csuarez.microservices.historico_microservice.vehiculo.HistoricoVehicu
 import com.csuarez.microservices.historico_microservice.vehiculo.HistoricoVehiculoRepository;
 import com.csuarez.microservices.historico_microservice.vehiculo.HistoricoVehiculoRequest;
 
-import com.csuarez.microservices.historico_microservice.accion.HistoricoAccionEntity;
-import com.csuarez.microservices.historico_microservice.accion.HistoricoAccionMapper;
-import com.csuarez.microservices.historico_microservice.accion.HistoricoAccionRepository;
-import com.csuarez.microservices.historico_microservice.accion.HistoricoAccionRequest;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -33,13 +29,10 @@ public class HistoricoService {
 
     private final HistoricoClienteRepository clienteRepository;
     private final HistoricoClienteMapper clienteMapper = new HistoricoClienteMapper();
-    //
+
     private final HistoricoVehiculoRepository vehiculoRepository;
     private final HistoricoVehiculoMapper vehiculoMapper = new HistoricoVehiculoMapper();
-    //
-    private final HistoricoAccionRepository accionRepository;
-    private final HistoricoAccionMapper accionMapper = new HistoricoAccionMapper();
-    //
+
     LocalDateTime localDatetime = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
@@ -92,30 +85,6 @@ public class HistoricoService {
             return savedVehiculo.getId().toString();
         } catch(Exception e) {
             throw new HistoricoException("Historico %s - ERROR: %s".formatted("Vehiculo", e.toString()));
-        }
-    }
-
-    /*
-     *  Metodo:      createHistoricoAccion
-     *  Entrada:     Json con los datos de accion de un vehiculo en un parking
-     *  Salida:      String
-     *  Descripcion: Crea un accion de vehiculo en la tabla de accion
-     */
-    public String createHistoricoAccion(String accion, HistoricoAccionRequest request) {
-        try {
-            if (request == null) {
-                throw new HistoricoException("No se han recibido datos para el CRUD de accion de vehículo");
-            }
-
-            HistoricoAccionEntity accionES = accionMapper.toHistoricoAccionEntity(request);
-//            accionES.setId(getNextId());
-
-            
-            var savedAccion = accionRepository.save(accionES);
-
-            return savedAccion.getId().toString();
-        } catch(Exception e) {
-            throw new HistoricoException("Historico %s - ERROR: %s".formatted("AccionES", e.toString()));
         }
     }
 

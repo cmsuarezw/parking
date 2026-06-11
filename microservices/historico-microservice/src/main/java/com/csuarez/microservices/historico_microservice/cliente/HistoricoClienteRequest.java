@@ -13,7 +13,7 @@ public record HistoricoClienteRequest(
     String crud,
     @NotNull(message = "ID de Cliente es obligatorio")
     @NotBlank(message = "ID de Cliente no puede estar en blanco")
-    String id_Cliente,
+    String idCliente,
     @NotNull(message = "Dni es obligatorio")
     @NotBlank(message = "Dni no puede estar en blanco")
     String dni,
@@ -31,9 +31,9 @@ public record HistoricoClienteRequest(
     String ciudad,
     @NotNull(message = "Fecha de creación es obligatoria")
     @NotBlank(message = "Fecha de creación no puede estar en blanco")
-    LocalDateTime fec_Create,
-    LocalDateTime fec_Update,
-    LocalDateTime fec_Baja
+    LocalDateTime fecCreate,
+    LocalDateTime fecUpdate,
+    LocalDateTime fecBaja
 ) {
 
 }

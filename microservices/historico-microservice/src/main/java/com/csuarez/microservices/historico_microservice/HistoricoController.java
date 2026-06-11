@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.csuarez.microservices.historico_microservice.accion.HistoricoAccionRequest;
 import com.csuarez.microservices.historico_microservice.cliente.HistoricoClienteRequest;
 import com.csuarez.microservices.historico_microservice.vehiculo.HistoricoVehiculoRequest;
 
@@ -33,10 +32,5 @@ public class HistoricoController {
             return ResponseEntity.ok(historicoService.createHistoricoVehiculo(accion, request));
         }
 
-    @PostMapping("/accion/{accion}")
-    public ResponseEntity<String> createHistoricoAccion(@Valid @PathVariable("accion") String accion,
-                                                         @Valid @RequestBody HistoricoAccionRequest request) {
-            return ResponseEntity.ok(historicoService.createHistoricoAccion(accion, request));
-        }
     
 }
