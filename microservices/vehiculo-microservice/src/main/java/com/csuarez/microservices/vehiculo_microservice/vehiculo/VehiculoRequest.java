@@ -9,7 +9,7 @@ public record VehiculoRequest(
     String matricula,
     @NotNull(message="El id cliente es obligatorio")
     @NotBlank(message="El id cliente tiene que estar informado")
-    String id_Cliente,
+    String idCliente,
     @NotNull(message="La marca del vehículo es obligatoria")
     @NotBlank(message="La marca del vehículo tiene que estar informada")
     String marca,

@@ -100,27 +100,29 @@ public class VehiculoService {
         // Para poder seguir adelante con las pruebas
 /*        
  * OpenFeign
- *
-            ClienteResponse clienteResponse = clienteInterface.getClienteById(request.id_Cliente())
-                        .orElseThrow(() -> new VehiculoException("no existe el cliente con Id " + request.id_Cliente()));
+ */
+            ClienteResponse clienteResponse = clienteInterface.getClienteById(request.idCliente())
+                        .orElseThrow(() -> new VehiculoException("no existe el cliente con Id " + request.idCliente()));
                         //.orElse(null);
-*/                               
+            
+/*                             
 
             List<ServiceInstance> lista = discoveryClient.getInstances(serviceName);
             URI clienteUri = (lista != null && lista.size() > 0) ? lista.get(0).getUri() : null;
 log.warn("createVehiculo - clienteUri: %s".formatted(clienteUri));            
             restTemplate = new RestTemplate();
-            var existe = restTemplate.getForObject(clienteUri + "/api/v1/clientes/existeCliente/" + request.id_Cliente(), String.class);
+            var uri2 = "http://localhost:8091";
+            var existe = restTemplate.getForObject(uri2 + "/api/v1/clientes/getClienteById/" + request.idCliente(), String.class);
         
             if (existe == null){
-                throw new VehiculoException("No existe el cliente %s".formatted(request.id_Cliente()));
+                throw new VehiculoException("No existe el cliente %s".formatted(request.idCliente()));
             }
-
+*/
             VehiculoEntity vehiculoEntity = mapper.toVehiculo(request);
 
             //Por quitar la advertencia a falta de revision
-            if (request.id_Cliente() != null){
-                vehiculoEntity.setId_Cliente(request.id_Cliente());
+            if (request.idCliente() != null){
+                vehiculoEntity.setId_Cliente(request.idCliente());
             } else {
                 throw new VehiculoException("El cliente Id no puede ser null");
             }
