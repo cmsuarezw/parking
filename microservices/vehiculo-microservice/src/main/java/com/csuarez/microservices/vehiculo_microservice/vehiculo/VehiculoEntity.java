@@ -1,23 +1,14 @@
 package com.csuarez.microservices.vehiculo_microservice.vehiculo;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.datetime.DateFormatter;
-
-import com.csuarez.microservices.vehiculo_microservice.accion.AccionEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,14 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name="vehiculo") //, uniqueConstraints = @UniqueConstraint(name = "email_unique", columnNames="email_adress"))
 @Slf4j
 public class VehiculoEntity {
-
+/*
     @Builder.Default
     private DateTimeFormatter formatterDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     @Builder.Default
-    private DateFormatter formatterDate     = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private DateFormatter formatterDate = DateFormatter.ofPattern("dd-MM-yyyy");
     @Builder.Default
-    private DateTimeFormatter formatterTime     = DateTimeFormatter.ofPattern("HH:mm:ss");
-   
+    private DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+*/   
 
     @Id
     @GeneratedValue
@@ -61,17 +52,6 @@ public class VehiculoEntity {
     private String modelo;
 
     //@Transient
-    @Column(name = "fec_Create", nullable = false, columnDefinition = "TIMESTAMP")
-    @CreationTimestamp
-    @DateTimeFormat(pattern = "DD-MM-YYYY HH:MI:SS")
-    private LocalDateTime fec_Create;
-
-    //@Transient
-    @Column(name = "fec_Update", nullable = true, columnDefinition = "TIMESTAMP")
-    @DateTimeFormat(pattern = "DD-MM-YYYY HH:MI:SS")
-    private LocalDateTime fec_Update;
-
-    //@Transient
     @Column(name = "fec_Baja", nullable = true, columnDefinition = "TIMESTAMP")
     @DateTimeFormat(pattern = "DD-MM-YYYY HH:MI:SS")
     private LocalDateTime fec_Baja;
@@ -81,18 +61,17 @@ public class VehiculoEntity {
     @DateTimeFormat(pattern = "DD-MM-YYYY HH:MI:SS")
     private LocalDateTime fec_Traspasado;
 
-    @Column(name = "DatCre", nullable = false, columnDefinition = "DATE")
-    @CreatedDate
-    @DateTimeFormat(pattern = "DD-MM-YYYY")
-    private LocalDate DatCre;
+    //@Transient
+    @Column(name = "datCre", nullable = false, columnDefinition = "TIMESTAMP")
+    @CreationTimestamp
+    @DateTimeFormat(pattern = "DD-MM-YYYY HH:MI:SS")
+    private LocalDateTime datCre;
 
-    @Column(name = "DatUpd", nullable = true, columnDefinition = "DATE")
-    @DateTimeFormat(pattern = "DD-MM-YYYY")
-    private LocalDate DatUpd;
-
-    @OneToMany(mappedBy="vehiculo", fetch=FetchType.LAZY)
-    private List<AccionEntity> acciones;
-    
+    //@Transient
+    @Column(name = "datUpd", nullable = true, columnDefinition = "TIMESTAMP")
+    @DateTimeFormat(pattern = "DD-MM-YYYY HH:MI:SS")
+    private LocalDateTime datUpd;
+/*    
     @Override
     public String toString() {
         return "Vehiculo{"        +
@@ -101,11 +80,11 @@ public class VehiculoEntity {
                ", id_Cliente = '"  + this.getId_Cliente()  + "'\n" +
                ", marca = '"      + this.getMarca()      + "'\n" +
                ", modelo = '"     + this.getModelo()     + "'\n" +
-               ", fecBaja = "     + this.getFec_Baja()    + "\n" +
-               ", fecCreate = "   + this.getFec_Create()  + "\n" +
-               ", fecUpdate = "   + this.getFec_Update()  + "\n" +
-               ", traspasado = '" + this.getFec_Traspasado() + "'\n" +
+               ", fecBaja = "     + this.getFec_Baja().toString() + "\n" +
+               ", fecCreate = "   + this.getFec_Create().toString()  + "\n" +
+               ", fecUpdate = "   + this.getFec_Update().toString()  + "\n" +
+               ", traspasado = '" + this.getFec_Traspasado().toString() + "'\n" +
                "}";
     }
-
+*/
 }

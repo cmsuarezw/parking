@@ -8,11 +8,10 @@ public record ClienteResponse(
     String email,
     String telefono,
     String ciudad,
-    String baja,
-    String fecBaja,
-    String fecCreate,
-    String fecUpdate,
-    String traspasado    
+    String fec_Create,
+    String fec_Update,
+    String fec_Baja,
+    String fec_Traspasado   
 ) {
 
 }

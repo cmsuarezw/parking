@@ -25,10 +25,6 @@
 			<groupId>com.csuarez.microservices</groupId>
 			<artifactId>common-exceptions</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
 		</dependency>
 	</dependencies>
 

@@ -1,13 +1,16 @@
 package com.csuarez.microservices.vehiculo_microservice.vehiculo;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.csuarez.microservices.vehiculo_microservice.Cliente.ClienteInterface;
 import com.csuarez.microservices.vehiculo_microservice.Cliente.ClienteResponse;
@@ -24,10 +27,10 @@ public class VehiculoService {
     private final VehiculoRepository repository;
     private final VehiculoMapper mapper = new VehiculoMapper();
     private final ClienteInterface clienteInterface;
-
-    LocalDate hoy = LocalDate.now();
-    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-    String localDate = df.format(hoy);
+    @Autowired
+    private DiscoveryClient discoveryClient;
+    private URI uri;
+    private RestTemplate restTemplate;
 
     LocalDateTime localDatetime = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -58,14 +61,14 @@ public class VehiculoService {
     }
 
     /*
-     *  Metodo:      getVehiculoByid_Cliente
+     *  Metodo:      getVehiculoById_Cliente
      *  Entrada:     String id_Cliente
      *               String baja
      *  Salida:      List<VehiculoResponse>
      *  Descripcion: Devuelve de un cliente todos sus vehiculos y sus acciones
      *               Baja indica si se anaden o no los vehículos dados de baja
      */  
-    public List<VehiculoResponse> getVehiculosByid_Cliente(String id_Cliente) {
+    public List<VehiculoResponse> getVehiculosById_Cliente(String id_Cliente) {
         if (id_Cliente == null) {
             throw new VehiculoException("El id_Cliente debe estar informado");
         }
@@ -87,24 +90,44 @@ public class VehiculoService {
      */
    
     public String createVehiculo(VehiculoRequest request) {
+
+        String serviceName = "CLIENTE-MICROSERVICE";
+
         try {
             if (request == null) {
                 throw new VehiculoException("No se han recibido datos para la creación de vehiculo");
             }      
-
+        // Para poder seguir adelante con las pruebas
+/*        
+ * OpenFeign
+ *
             ClienteResponse clienteResponse = clienteInterface.getClienteById(request.id_Cliente())
-                        //.orElseThrow(() -> new VehiculoException("no existe el cliente con Id " + request.id_Cliente()))
-                        .orElse(null);
+                        .orElseThrow(() -> new VehiculoException("no existe el cliente con Id " + request.id_Cliente()));
+                        //.orElse(null);
+*/                               
+
+            List<ServiceInstance> lista = discoveryClient.getInstances(serviceName);
+            URI clienteUri = (lista != null && lista.size() > 0) ? lista.get(0).getUri() : null;
+log.warn("createVehiculo - clienteUri: %s".formatted(clienteUri));            
+            restTemplate = new RestTemplate();
+            var existe = restTemplate.getForObject(clienteUri + "/api/v1/clientes/existeCliente/" + request.id_Cliente(), String.class);
+        
+            if (existe == null){
+                throw new VehiculoException("No existe el cliente %s".formatted(request.id_Cliente()));
+            }
 
             VehiculoEntity vehiculoEntity = mapper.toVehiculo(request);
 
-            //Por quitar la advertencia
-            vehiculoEntity.setId_Cliente(clienteResponse.id_Cliente());
-            vehiculoEntity.setFec_Create(localDatetime);
+            //Por quitar la advertencia a falta de revision
+            if (request.id_Cliente() != null){
+                vehiculoEntity.setId_Cliente(request.id_Cliente());
+            } else {
+                throw new VehiculoException("El cliente Id no puede ser null");
+            }
+            
             vehiculoEntity.setFec_Baja(null);
-            vehiculoEntity.setFec_Update(null);
             vehiculoEntity.setFec_Traspasado(null);
-            vehiculoEntity.setDatCre(hoy);
+            vehiculoEntity.setDatCre(localDatetime);
             vehiculoEntity.setDatUpd(null);
 
             log.warn("createVehiculo - request - %s".formatted(request.toString()));
@@ -143,9 +166,8 @@ public class VehiculoService {
 
         vc.setMarca(request.marca());
         vc.setModelo(request.modelo());
-        vc.setFec_Update(localDatetime);
         vc.setFec_Traspasado(null);
-        vc.setDatUpd(hoy);
+        vc.setDatUpd(localDatetime);
         
         var savedVehiculo = repository.save(vc);
         //Traspasamos la actualizacion con Kafka
@@ -181,9 +203,8 @@ public class VehiculoService {
 
 
         vehiculo.setFec_Baja("S".equals(baja) ? localDatetime : null);
-        vehiculo.setFec_Update(localDatetime);
         vehiculo.setFec_Traspasado(null);
-        vehiculo.setDatUpd(hoy);
+        vehiculo.setDatUpd(localDatetime);
 
         repository.save(vehiculo);
         //Traspasamos la actualizacion con Kafka

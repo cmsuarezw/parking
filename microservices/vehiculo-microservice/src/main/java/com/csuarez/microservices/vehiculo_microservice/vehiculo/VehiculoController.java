@@ -35,8 +35,8 @@ public class VehiculoController {
     }
 
     @GetMapping("/{id_Cliente}")
-    public  ResponseEntity<List<VehiculoResponse>> getVehiculosByid_Cliente(@Valid @PathVariable("id_Cliente") String id_Cliente){
-        return ResponseEntity.ok(service.getVehiculosByid_Cliente(id_Cliente));
+    public  ResponseEntity<List<VehiculoResponse>> getVehiculosById_Cliente(@Valid @PathVariable("id_Cliente") String id_Cliente){
+        return ResponseEntity.ok(service.getVehiculosById_Cliente(id_Cliente));
     }
 
     //@CrossOrigin // Permite desde cualquier origen (por defecto)

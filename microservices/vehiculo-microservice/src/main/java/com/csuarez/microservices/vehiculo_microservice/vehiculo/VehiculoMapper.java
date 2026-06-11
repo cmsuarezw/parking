@@ -2,8 +2,6 @@ package com.csuarez.microservices.vehiculo_microservice.vehiculo;
 
 import org.springframework.stereotype.Service;
 
-import com.csuarez.microservices.vehiculo_microservice.accion.AccionMapper;
-
 @Service
 public class VehiculoMapper {
 
@@ -35,13 +33,8 @@ public class VehiculoMapper {
                     vehiculo.getId_Cliente(),
                     vehiculo.getMarca(),
                     vehiculo.getModelo(),
-                    vehiculo.getFec_Create(),
-                    vehiculo.getFec_Update(),
                     vehiculo.getFec_Baja(),
-                    vehiculo.getFec_Traspasado(),
-                    vehiculo.getAcciones().stream()
-                            .map(AccionMapper::toAccionResponse)
-                            .toList()
+                    vehiculo.getFec_Traspasado()
         );
     }
 
