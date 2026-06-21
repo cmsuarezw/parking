@@ -59,15 +59,15 @@ public class VehiculoService {
      *  Descripcion: Devuelve de un cliente todos sus vehiculos y sus acciones
      *               Baja indica si se anaden o no los vehículos dados de baja
      */  
-    public List<VehiculoResponse> getVehiculosById_Cliente(String id_Cliente) {
-        if (id_Cliente == null) {
-            throw new VehiculoException("El id_Cliente debe estar informado");
+    public List<VehiculoResponse> getVehiculosByIdCliente(String idCliente) {
+        if (idCliente == null) {
+            throw new VehiculoException("El idCliente debe estar informado");
         }
         
         //String bajaTmp = baja == null || baja.toUpperCase() != "S" ? "N" : baja.toUpperCase();
 
         return repository.findAll().stream()
-                .filter(vehiculo -> vehiculo.getId_Cliente().equals(id_Cliente))
+                .filter(vehiculo -> vehiculo.getIdCliente().equals(idCliente))
                 //.filter(vehiculo -> vehiculo.getBaja().equals(bajaTmp))
                 .map(mapper::toVehiculoResponse)
                 .toList();
@@ -91,7 +91,7 @@ public class VehiculoService {
  * OpenFeign
  */
             ClienteResponse clienteResponse = clienteInterface.getClienteById(request.idCliente())
-                        .orElseThrow(() -> new VehiculoException("no existe el cliente con Id " + request.idCliente()));
+                        .orElseThrow(() -> new VehiculoException("No existe el cliente con Id " + request.idCliente()));
                         //.orElse(null);
             
 
@@ -99,7 +99,7 @@ public class VehiculoService {
 
             //Por quitar la advertencia a falta de revision
             if (request.idCliente() != null){
-                vehiculoEntity.setId_Cliente(request.idCliente());
+                vehiculoEntity.setIdCliente(request.idCliente());
             } else {
                 throw new VehiculoException("El cliente Id no puede ser null");
             }

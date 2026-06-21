@@ -7,7 +7,7 @@ public class ClienteMapper {
 
     public ClienteEntity toCliente(ClienteRequest request) {
         return ClienteEntity.builder()
-                .id_Cliente(request.id_Cliente())
+                .idCliente(request.idCliente())
                 .dni(request.dni())
                 .nombre(request.nombre())
                 .apellidos(request.apellidos())
@@ -19,7 +19,7 @@ public class ClienteMapper {
 
     public ClienteResponse toClienteResponse(ClienteEntity cliente) {
         return ClienteResponse.builder()
-                    .id_Cliente(cliente.getId_Cliente())
+                    .idCliente(cliente.getIdCliente())
                     .dni(cliente.getDni())
                     .nombre(cliente.getNombre())
                     .apellidos(cliente.getApellidos())

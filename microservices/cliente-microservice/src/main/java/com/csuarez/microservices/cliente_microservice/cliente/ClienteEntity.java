@@ -21,7 +21,7 @@ import lombok.Setter;
 @Document
 public class ClienteEntity {
     @Id
-    private String id_Cliente;
+    private String idCliente;
     private String dni;
     private String nombre;
     private String apellidos;

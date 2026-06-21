@@ -94,13 +94,13 @@ public class ClienteService {
      * Descripcion: Devuelve los datos de un cliente
      * 
      */
-    public ClienteResponse getClienteById(String id_Cliente) {
-        if (id_Cliente == null) {
+    public ClienteResponse getClienteById(String idCliente) {
+        if (idCliente == null) {
             throw new ClienteException("El ID de cliente debe de estar informado");
         }
-        return repository.findById(id_Cliente)
+        return repository.findById(idCliente)
                     .map(mapper::toClienteResponse)
-                    .orElseThrow(() -> new ClienteException("Cliente con id %s no encontrado".formatted(id_Cliente)));
+                    .orElseThrow(() -> new ClienteException("Cliente con id %s no encontrado".formatted(idCliente)));
     }
 
     /*
@@ -140,7 +140,7 @@ public class ClienteService {
 
         }
 */
-        return savedCliente.getId_Cliente();
+        return savedCliente.getIdCliente();
     }
 
     /*
@@ -156,13 +156,13 @@ public class ClienteService {
             throw new ClienteException("No se han recibido datos para la creación de cliente");
         }
 
-        if (request.id_Cliente() == null) {
+        if (request.idCliente() == null) {
             throw new ClienteException("El Id de Cliente debe de estar informado");
         }
 
         //Comprobamos si existe el id cliente
-        var cl = repository.findById(request.id_Cliente())
-                    .orElseThrow(() -> new ClienteException("Cliente con id %s no encontrado".formatted(request.id_Cliente())));
+        var cl = repository.findById(request.idCliente())
+                    .orElseThrow(() -> new ClienteException("Cliente con id %s no encontrado".formatted(request.idCliente())));
 
         var cliente = mapper.toCliente(request);
 
@@ -180,7 +180,7 @@ public class ClienteService {
             savedCliente = repository.save(cliente);
         }
 */
-       return savedCliente.getId_Cliente();
+       return savedCliente.getIdCliente();
     }
 
     /*
@@ -191,8 +191,8 @@ public class ClienteService {
      * 
      */
     //@SuppressWarnings("unused")
-    public void deleteClienteById(String id_Cliente, String baja) {
-        if (id_Cliente == null || id_Cliente.isBlank())
+    public void deleteClienteById(String idCliente, String baja) {
+        if (idCliente == null || idCliente.isBlank())
             throw new ClienteException("El Id de cliente debe estar informado");
 
         if (baja == null || baja.isBlank())
@@ -203,8 +203,8 @@ public class ClienteService {
         if(!"S".equals(baja) && !"N".equals(baja))
             throw new ClienteException("Baja debe ser 'S' o 'N'");
 
-        var cliente =repository.findById(id_Cliente)
-                               .orElseThrow(() -> new ClienteException("Cliente con id %s no encontrado".formatted(id_Cliente)));
+        var cliente =repository.findById(idCliente)
+                               .orElseThrow(() -> new ClienteException("Cliente con id %s no encontrado".formatted(idCliente)));
         
         if ("S".equals(baja) && cliente.getFec_Baja() != null)
             throw new ClienteException("El cliente ya se encuentra de baja");

@@ -1,7 +1,7 @@
 package com.csuarez.microservices.vehiculo_microservice.Cliente;
 
 public record ClienteResponse(
-    String id_Cliente,
+    String idCliente,
     String dni,
     String nombre,
     String apellidos,

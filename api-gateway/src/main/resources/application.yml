@@ -1,5 +1,5 @@
 spring:
   application:
-    name: historico-microservice
+    name: api-gateway
   config:
     import: ${SPRING_CONFIG_IMPORT:optional:configserver:http://localhost:8888}

@@ -187,6 +187,48 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:${EUREKA_SERVER_PORT}/eureka/
     networks:
       - microservices
+#
+#  diccionario-microservice:
+#    build:
+#      context: .
+#      dockerfile: ./microservices/dicionario-microservice/Dockerfile
+#    container_name: diccionario-microservice
+#    depends_on:
+#      config-server:
+#        condition: service_healthy
+#      discovery-server:
+#        condition: service_healthy
+#      mysqldb:
+#        condition: service_healthy
+#    ports:
+#      - "${DICCIONARIO_MICROSERVICE_PORT}:8094"
+#    environment:
+#      - SPRING_DB_URL=jdbc:mysql://mysqldb:3306/parking?createDatabaseIfNotExist=true&serverTimezone=UTC
+#      - SPRING_DB_USER_NAME=root
+#      - SPRING_DB_PASSWORD=pass
+#      - SPRING_CONFIG_IMPORT=configserver:http://config-server:${CONFIG_SERVER_PORT}
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:${EUREKA_SERVER_PORT}/eureka/
+#    networks:
+#      - microservices
+#
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./api-gateway/Dockerfile
+    container_name: gateway-server
+    depends_on:
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    ports:
+      - "${API_GATEWAY_PORT}:8222"
+    environment:
+      - SPRING_CONFIG_IMPORT=configserver:http://config-server:${CONFIG_SERVER_PORT}
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:${EUREKA_SERVER_PORT}/eureka/
+    networks:
+      - microservices
+
 
 volumes:
   mongo:

@@ -34,9 +34,9 @@ public class VehiculoController {
         return ResponseEntity.ok(service.getVehiculoByMatricula(matricula));
     }
 
-    @GetMapping("/{id_Cliente}")
-    public  ResponseEntity<List<VehiculoResponse>> getVehiculosById_Cliente(@Valid @PathVariable("id_Cliente") String id_Cliente){
-        return ResponseEntity.ok(service.getVehiculosById_Cliente(id_Cliente));
+    @GetMapping("/{idCliente}")
+    public  ResponseEntity<List<VehiculoResponse>> getVehiculosByIdCliente(@Valid @PathVariable("idCliente") String idCliente){
+        return ResponseEntity.ok(service.getVehiculosByIdCliente(idCliente));
     }
 
     //@CrossOrigin // Permite desde cualquier origen (por defecto)

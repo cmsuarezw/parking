@@ -42,8 +42,8 @@ public class VehiculoEntity {
     @Column(name = "matricula", nullable = false, columnDefinition = "VARCHAR(10)", unique = true)
     private String matricula;
 
-    @Column(name = "id_Cliente", nullable = false, columnDefinition = "VARCHAR(100)")
-    private String id_Cliente;
+    @Column(name = "idCliente", nullable = false, columnDefinition = "VARCHAR(100)")
+    private String idCliente;
 
     @Column(name = "marca" , nullable = false, columnDefinition = "VARCHAR(10)")
     private String marca;

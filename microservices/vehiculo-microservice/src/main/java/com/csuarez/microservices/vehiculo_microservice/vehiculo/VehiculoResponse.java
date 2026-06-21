@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record VehiculoResponse(
     Integer id,
     String Matricula,
-    String id_Cliente,
+    String idCliente,
     String marca,
     String modelo,
     LocalDateTime fec_Baja,

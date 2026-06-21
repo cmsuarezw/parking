@@ -1,0 +1,46 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: cliente-microservice
+              uri: lb://cliente-microservice
+              predicates:
+                - Path=/api/v1/cliente/**
+              filters:
+                - PreserveHostHeader
+                - RewritePath=/api/v1/cliente/v3/api-docs, /v3/api-docs    
+            - id: vehiculo-microservice
+              uri: lb://vehiculo-microservice
+              predicates:
+                - Path=/api/v1/vehiculo/**
+              filters:
+                - PreserveHostHeader
+                - RewritePath=/api/v1/vehiculo/v3/api-docs, /v3/api-docs
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    reactor.netty: DEBUG
+
+server:
+  port: 8222
+
+management: 
+    endpoints:
+        web:
+            exposure:
+                include: health, info, prometheus
+    endpoint:
+        health:
+            show-details: always 

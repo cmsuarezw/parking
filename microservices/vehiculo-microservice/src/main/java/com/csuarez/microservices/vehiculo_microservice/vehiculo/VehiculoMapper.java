@@ -8,7 +8,7 @@ public class VehiculoMapper {
     public VehiculoEntity toVehiculo(VehiculoRequest request) {
         return VehiculoEntity.builder()
                 .matricula(request.matricula())
-                .id_Cliente(request.idCliente())
+                .idCliente(request.idCliente())
                 .marca(request.marca())
                 .modelo(request.modelo())
                 .build();
@@ -30,7 +30,7 @@ public class VehiculoMapper {
         return new VehiculoResponse(
                     vehiculo.getId(),
                     vehiculo.getMatricula(),
-                    vehiculo.getId_Cliente(),
+                    vehiculo.getIdCliente(),
                     vehiculo.getMarca(),
                     vehiculo.getModelo(),
                     vehiculo.getFec_Baja(),

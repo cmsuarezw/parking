@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record ClienteRequest(
-    String id_Cliente,
+    String idCliente,
 // Para testing inicial, se utilizará un calculador de DNI
     //@NotNull(message = "Dni debe tener formato tipo 11111111X")
     //@NotBlank(message = "Dni no puede estar en blanco")    

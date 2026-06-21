@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("api/v1/clientes")
+@RequestMapping("api/v1/cliente")
 @RequiredArgsConstructor
 @Slf4j
 public class ClienteController {
@@ -31,9 +31,9 @@ public class ClienteController {
         return ResponseEntity.ok(service.getClientes());
     }
 
-    @GetMapping("/{id_Cliente}")
-    public ResponseEntity<ClienteResponse> getClienteById(@PathVariable("id_Cliente") String id_Cliente) {
-        return ResponseEntity.ok(service.getClienteById(id_Cliente));
+    @GetMapping("/{idCliente}")
+    public ResponseEntity<ClienteResponse> getClienteById(@PathVariable("idCliente") String idCliente) {
+        return ResponseEntity.ok(service.getClienteById(idCliente));
     }
     
     @PostMapping
@@ -42,15 +42,15 @@ public class ClienteController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateClientes(@Valid @RequestBody ClienteRequest request) {
+    public ResponseEntity<Void> updateCliente(@Valid @RequestBody ClienteRequest request) {
         service.updateCliente(request);
         return ResponseEntity.accepted().build();
     }
     
-    @DeleteMapping("/{id_Cliente}/{baja}")
-    public ResponseEntity<Void> deleteClienteById(@PathVariable("id_Cliente") String id_Cliente,
+    @DeleteMapping("/{idCliente}/{baja}")
+    public ResponseEntity<Void> deleteClienteById(@PathVariable("idCliente") String idCliente,
                                                   @PathVariable("baja") String baja) {
-        service.deleteClienteById(id_Cliente, baja);
+        service.deleteClienteById(idCliente, baja);
         return ResponseEntity.accepted().build();
     }
     
