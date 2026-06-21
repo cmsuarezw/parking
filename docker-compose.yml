@@ -2,6 +2,7 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongo_db
+
     ports:
       - "${MONGO_DB_PORT}:27017"
     volumes:
@@ -10,6 +11,11 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_DB_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_DB_PASSWORD}
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet 1
+      interval: 10s
+      timeout: 10s
+      retries: 5
     networks:
       - microservices
 #
@@ -28,26 +34,51 @@ services:
       - POSTGRES_PASSWORD=${VEHICULO_DB_PASSWORD}
       - POSTGRES_DB=${VEHICULO_DB_NAME}
       - PGDATA=/data/postgres
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${VEHICULO_DB_USERNAME} -d ${VEHICULO_DB_PASSWORD}'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - microservices
 #
-#  oracledb:
-#    image: gvenzl/oracle-xe:latest # container-registry.oracle.com/database/express:latest
-#    container_name: oracledb
-#    ports:
-#      - "${ORACLE_DB_PORT_1}:1521"
-#      - "${ORACLE_DB_PORT_2}:5500"
-#    volumes:
-#      - ./Oracle_Sql/init.sql:/opt/oracle/scripts/startup/01-init.sql
-#      - oracle:/opt/oracle/oradata
-#    restart: always
-#    environment:
-#      - ORACLE_PDB=${ORACLE_PDB}
-#      - ORACLE_CHARACTERSET=${ORACLE_DB_CHARACTERSET}
-#      - ORACLE_PWD=${ORACLE_DB_PASSWORD}
-#    networks:
-#      - microservices
-##
+  oracledb:
+    image: container-registry.oracle.com/database/express:latest
+    container_name: oracle_db
+    ports:
+      - "${ORACLE_DB_PORT_1}:1521"
+      - "${ORACLE_DB_PORT_2}:5500"
+    volumes:
+      - ./Oracle_Sql/init.sql:/opt/oracle/scripts/startup/01-init.sql
+      - oracle:/opt/oracle/oradata
+    restart: always
+    environment:
+      - ORACLE_CHARACTERSET=${ORACLE_DB_CHARACTERSET}
+      - ORACLE_PDB=ORCLPDB1
+      - ORACLE_USER=system  
+      - ORACLE_PWD=pass
+    networks:
+       - microservices
+#
+  mysqldb:
+    image: mysql:latest
+    container_name: mysql_db
+    ports:
+      - "${MYSQL_DB_PORT}:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_PASSWORD: pass
+      MYSQL_DATABASE: parking
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
+    networks:
+      - microservices
+#
   config-server:
     build: 
       context: .
@@ -129,33 +160,39 @@ services:
     networks:
       - microservices
 #
-#  historico-microservice:
-#    build:
-#      context: .
-#      dockerfile: ./microservices/historico-microservice/Dockerfile
-#    container_name: historico-microservice
-#    depends_on:
-#      config-server:
-#        condition: service_healthy
-#      discovery-server:
-#        condition: service_healthy
-#      oracledb:
-#        condition: service_started
-#    ports:
-#      - "${HISTORICO_MICROSERVICE_PORT}:8093"
-#    environment:
-#      - SPRING_CONFIG_IMPORT=configserver:http://config-server:${CONFIG_SERVER_PORT}
-#      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@oracledb:${ORACLE_DB_PORT_1}/
-#      - SPRING_DATASOURCE_USERNAME=${HISTORICO_DB_USERNAME}
-#      - SPRING_DATASOURCE_PASSWORD=${HISTORICO_DB_PASSWORD}
-#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:${EUREKA_SERVER_PORT}/eureka/
-#    networks:
-#      - microservices
-#
+# historico-microservice:
+#   build:
+#     context: .
+#     dockerfile: ./microservices/historico-microservice/Dockerfile
+#   container_name: historico-microservice
+#   depends_on:
+#     config-server:
+#       condition: service_healthy
+#     discovery-server:
+#       condition: service_healthy
+#       mysqldb:
+#         condition: service_healthy
+#     oracledb:
+#       condition: service_healthy
+#   ports:
+#     - "${HISTORICO_MICROSERVICE_PORT}:8093"
+#   environment:
+#     - SPRING_DB_URL=jdbc:mysql://mysqldb:3306/parking?createDatabaseIfNotExist=true&serverTimezone=UTC
+#     - SPRING_DB_USER_NAME=root
+#     - SPRING_DB_PASSWORD=pass
+#     - SPRING_DB_URL=jdbc:oracle:thin:@oracledb:1521:xe
+#     - SPRING_DB_USER_NAME=parking
+#     - SPRING_DB_PASSWORD=pass
+#     - SPRING_CONFIG_IMPORT=configserver:http://config-server:${CONFIG_SERVER_PORT}
+#     - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:${EUREKA_SERVER_PORT}/eureka/
+#   networks:
+#     - microservices
+
 volumes:
   mongo:
   postgres:
   oracle:
+  mysql:
 
 networks:
   microservices:

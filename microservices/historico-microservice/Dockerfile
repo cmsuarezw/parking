@@ -16,6 +16,6 @@ WORKDIR /app
 
 COPY --from=build /app/microservices/historico-microservice/target/*.jar app.jar
 
-EXPOSE 8093
+EXPOSE 8092
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
