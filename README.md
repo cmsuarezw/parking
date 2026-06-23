@@ -1,5 +1,5 @@
 Proyecto de presentación para dar a conocer las diferentes tecnologías actuales en respuesta a las necesidades de un proyecto actual.
-El Proyecto trata acerca de una gestión de un parking con sus clientes, los vehículos de los mismos y una acción de entrada/salida de vehículos, descripción del vehículo, gestión de errores centralizados y por microservicio)
+El proyecto trata acerca de una gestión de un parking con sus clientes, los vehículos de los mismos y una acción de entrada/salida de vehículos, descripción del vehículo, gestión de errores centralizados y por microservicio)
 Todo se realizará mediante microservicios dockerizados:
     i. Clientes: Gestión básica de clientes utilizando MongoDB como Bdd
     ii. Gestión de vehículos de cliente, matrícula y descripción entre otros datos, con acciones de E/S de un parking. Tiene sincronización síncrona con el microservicio de clientes
