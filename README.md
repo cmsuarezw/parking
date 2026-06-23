@@ -3,8 +3,8 @@ El proyecto trata acerca de una gestión de un parking con sus clientes, los veh
 Todo se realizará mediante microservicios dockerizados:
     i. Clientes: Gestión básica de clientes utilizando MongoDB como Bdd
     ii. Gestión de vehículos de cliente, matrícula y descripción entre otros datos, con acciones de E/S de un parking. Tiene sincronización síncrona con el microservicio de clientes
-     iii. Carga de histórico en Oracle y Mysql en comunicación asíncrona con Kafka
-    iV. Cargas y comunicación de ETLs mediante webservices y JSON
+    iii. Carga de histórico en Oracle y Mysql en comunicación asíncrona con Kafka
+    iv. Cargas y comunicación de ETLs mediante webservices y JSON
 Lenguajes y tecnologías utilizadas: 
     i. Back: Java 25, Spring Boot 4.0.7, Spring Cloud(Config Server), Eureka(Discovery Server), Docker, Hybernate\JPA, Spring Data, Feign, Kafka, API Gateway y Shell Scripting con Java
     ii. Bbdd: MongoDB, PostgreSQL, Oracle y Mysql
