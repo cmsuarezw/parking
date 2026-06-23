@@ -26,10 +26,8 @@ public class ClienteMapper {
                     .email(cliente.getEmail())
                     .telefono(cliente.getTelefono())
                     .ciudad(cliente.getCiudad())
-                    .fec_Create(cliente.getFec_Create())
-                    .fec_Update(cliente.getFec_Update())
-                    .fec_Baja(cliente.getFec_Baja())
-                    .fec_Traspasado(cliente.getFec_Traspasado())
+                    .fec_Baja(cliente.getFecBaja())
+                    .fec_Traspasado(cliente.getFecTraspasado())
                     .build();
     }
 

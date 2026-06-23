@@ -126,10 +126,8 @@ public class ClienteService {
             };
         }
 
-        cliente.setFec_Create(localDatetime.format(formatter));
-        cliente.setFec_Update("");
-        cliente.setFec_Baja("");
-        cliente.setFec_Traspasado("");
+        cliente.setFecBaja("");
+        cliente.setFecTraspasado("");
         cliente.setDatCre(localDate);
         cliente.setDatUpd("");
 
@@ -166,10 +164,8 @@ public class ClienteService {
 
         var cliente = mapper.toCliente(request);
 
-        cliente.setFec_Create(cl.getFec_Create());
-        cliente.setFec_Update(localDatetime.format(formatter));
-        cliente.setFec_Baja(cl.getFec_Baja());
-        cliente.setFec_Traspasado(cl.getFec_Traspasado());
+        cliente.setFecBaja(cl.getFecBaja());
+        cliente.setFecTraspasado(cl.getFecTraspasado());
         cliente.setDatCre(cl.getDatCre());
         cliente.setDatUpd(localDate);
 
@@ -206,12 +202,11 @@ public class ClienteService {
         var cliente =repository.findById(idCliente)
                                .orElseThrow(() -> new ClienteException("Cliente con id %s no encontrado".formatted(idCliente)));
         
-        if ("S".equals(baja) && cliente.getFec_Baja() != null)
+        if ("S".equals(baja) && cliente.getFecBaja() != null)
             throw new ClienteException("El cliente ya se encuentra de baja");
 
-        cliente.setFec_Baja(("S".equals(baja) ? localDatetime.format(formatter) : ""));
-        cliente.setFec_Update(localDatetime.format(formatter));
-        cliente.setFec_Traspasado("");
+        cliente.setFecBaja(("S".equals(baja) ? localDatetime.format(formatter) : ""));
+        cliente.setFecTraspasado("");
         cliente.setDatUpd(localDate);
 
         repository.save(cliente);

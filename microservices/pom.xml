@@ -18,7 +18,7 @@
 		<module>common-exceptions</module>
         <module>cliente-microservice</module>
 		<module>vehiculo-microservice</module>
-		<module>historico-microservice</module>
+		<module>hist-microservice</module>
     </modules>
 	<dependencies>
 		<dependency>

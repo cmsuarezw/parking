@@ -160,56 +160,28 @@ services:
     networks:
       - microservices
 #
-  historico-microservice:
+  hist-microservice:
     build:
       context: .
-      dockerfile: ./microservices/historico-microservice/Dockerfile
-    container_name: historico-microservice
+      dockerfile: ./microservices/hist-microservice/Dockerfile
+    container_name: hist-microservice
     depends_on:
       config-server:
         condition: service_healthy
       discovery-server:
         condition: service_healthy
-#      mysqldb:
-#        condition: service_healthy
-      oracledb:
+      mysqldb:
         condition: service_healthy
     ports:
       - "${HISTORICO_MICROSERVICE_PORT}:8093"
     environment:
-#      - SPRING_DB_URL=jdbc:mysql://mysqldb:3306/parking?createDatabaseIfNotExist=true&serverTimezone=UTC
-#      - SPRING_DB_USER_NAME=root
-#      - SPRING_DB_PASSWORD=pass
-      - SPRING_DB_URL=jdbc:oracle:thin:@oracledb:1521:xe
-      - SPRING_DB_USER_NAME=parking
+      - SPRING_DB_URL=jdbc:mysql://mysqldb:3306/parking?createDatabaseIfNotExist=true&serverTimezone=UTC
+      - SPRING_DB_USER_NAME=root
       - SPRING_DB_PASSWORD=pass
       - SPRING_CONFIG_IMPORT=configserver:http://config-server:${CONFIG_SERVER_PORT}
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:${EUREKA_SERVER_PORT}/eureka/
     networks:
       - microservices
-#
-#  diccionario-microservice:
-#    build:
-#      context: .
-#      dockerfile: ./microservices/dicionario-microservice/Dockerfile
-#    container_name: diccionario-microservice
-#    depends_on:
-#      config-server:
-#        condition: service_healthy
-#      discovery-server:
-#        condition: service_healthy
-#      mysqldb:
-#        condition: service_healthy
-#    ports:
-#      - "${DICCIONARIO_MICROSERVICE_PORT}:8094"
-#    environment:
-#      - SPRING_DB_URL=jdbc:mysql://mysqldb:3306/parking?createDatabaseIfNotExist=true&serverTimezone=UTC
-#      - SPRING_DB_USER_NAME=root
-#      - SPRING_DB_PASSWORD=pass
-#      - SPRING_CONFIG_IMPORT=configserver:http://config-server:${CONFIG_SERVER_PORT}
-#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:${EUREKA_SERVER_PORT}/eureka/
-#    networks:
-#      - microservices
 #
   api-gateway:
     build:
@@ -228,7 +200,6 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:${EUREKA_SERVER_PORT}/eureka/
     networks:
       - microservices
-
 
 volumes:
   mongo:

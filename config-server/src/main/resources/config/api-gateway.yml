@@ -43,4 +43,14 @@ management:
                 include: health, info, prometheus
     endpoint:
         health:
-            show-details: always 
+            show-details: always
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: Cliente Microservice
+        url: /api/v1/cliente/v3/api-docs
+      - name: Vehiculo Microservice
+        url: /api/v1/vehiculo/v3/api-docs
+      - name: Historico Microservice
+        url: /api/v1/historico/v3/api-docs

@@ -1,13 +1,15 @@
-package com.csuarez.microservices.cliente_microservice.cliente;
+package com.csuarez.microservices.hist_microservice.HistCliente;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,10 +19,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Data
-@Document
-public class ClienteEntity {
+public class HistClienteEntity {
+
     @Id
+    @GeneratedValue
+    private int id;
+    private String crud;
     private String idCliente;
     private String dni;
     private String nombre;
@@ -29,12 +33,13 @@ public class ClienteEntity {
     private String telefono;
     private String ciudad;
     @DateTimeFormat(pattern = "DD-MM-YYYY HH:MI:SS")
-    private String fecBaja;
+    private LocalDateTime fecBaja;
     @DateTimeFormat(pattern = "DD-MM-YYYY HH:MI:SS")
-    private String fecTraspasado;
+    private LocalDateTime fecTraspasado;
     @CreatedDate
     @DateTimeFormat(pattern = "DD-MM-YYYY")
-    private String DatCre;
+    private Date DatCre;
     @DateTimeFormat(pattern = "DD-MM-YYYY")
-    private String DatUpd;
+    private Date DatUpd;
+    
 }

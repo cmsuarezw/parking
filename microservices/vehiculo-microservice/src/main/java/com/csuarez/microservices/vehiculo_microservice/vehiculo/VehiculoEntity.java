@@ -81,8 +81,6 @@ public class VehiculoEntity {
                ", marca = '"      + this.getMarca()      + "'\n" +
                ", modelo = '"     + this.getModelo()     + "'\n" +
                ", fecBaja = "     + this.getFec_Baja().toString() + "\n" +
-               ", fecCreate = "   + this.getFec_Create().toString()  + "\n" +
-               ", fecUpdate = "   + this.getFec_Update().toString()  + "\n" +
                ", traspasado = '" + this.getFec_Traspasado().toString() + "'\n" +
                "}";
     }
